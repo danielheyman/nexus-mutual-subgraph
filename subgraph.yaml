@@ -105,7 +105,7 @@ templates:
       file: ./src/mappingClaims.ts
   - name: QuotationData
     kind: ethereum/contract
-    network: mainnet
+    network: ropsten
     source:
       abi: QuotationData
     mapping:
