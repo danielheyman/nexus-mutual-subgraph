@@ -1,12 +1,17 @@
 import { MakeCoverBeginCall } from "../generated/templates/Pool1/Pool1"
-import { Cover } from "../generated/schema"
-import { isLatestNexusContract, getInsuredContract, getUser } from "./helpers";
-import { BigInt } from "@graphprotocol/graph-ts";
+import { Cover, NexusContracts } from "../generated/schema"
+import { isLatestNexusContract, getInsuredContract, getUser, getLatestAddress } from "./helpers";
+import { BigInt, Address } from "@graphprotocol/graph-ts";
+import { ContractRegister } from "../generated/ContractRegister/ContractRegister";
+import { QuotationData } from "../generated/templates/QuotationData/QuotationData";
 
 export function handleNewCover(call: MakeCoverBeginCall): void {
   if (isLatestNexusContract("pool1", call.to)) {
     let user = getUser(call.from);
-    let id = call.from.toHexString() + "-" + BigInt.fromI32(user.coverCount).toString();
+    let register = ContractRegister.bind(NexusContracts.load("1").contractRegister as Address);
+    let qdAddress = getLatestAddress(register, "5144") // QD
+    let qd = QuotationData.bind(qdAddress);
+    let id = qd.getAllCoversOfUser(call.from)[user.coverCount].toString();
 
     let entity = Cover.load(id);
     if (entity == null) {

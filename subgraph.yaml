@@ -55,6 +55,10 @@ templates:
       abis:
         - name: Pool1
           file: ./abis/Pool1.json
+        - name: ContractRegister
+          file: ./abis/ContractRegister.json
+        - name: QuotationData
+          file: ./abis/QuotationData.json
       callHandlers:
         - function: makeCoverBegin(address,bytes4,uint256[],uint16,uint8,bytes32,bytes32)
           handler: handleNewCover
@@ -81,11 +85,11 @@ templates:
         - function: pushBurnedTokens(address,uint256,uint256)
           handler: handleBurnStake
       file: ./src/mappingTokenData.ts
-  - name: ClaimsData
+  - name: Claims
     kind: ethereum/contract
     network: ropsten
     source:
-      abi: ClaimsData
+      abi: Claims
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.3
@@ -93,9 +97,24 @@ templates:
       entities:
         - Claim
       abis:
-        - name: ClaimsData
-          file: ./abis/ClaimsData.json
+        - name: Claims
+          file: ./abis/Claims.json
       callHandlers:
-        - function: addClaim(uint256, uint256, address, uint256)
-          handler: handleAddClaim
-      file: ./src/mappingClaimsData.ts
+        - function: submitClaim(uint256)
+          handler: handleSubmitClaim
+      file: ./src/mappingClaims.ts
+  - name: QuotationData
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: QuotationData
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - QuotationData
+      abis:
+        - name: QuotationData
+          file: ./abis/QuotationData.json
+      file: ./src/mappingQuotationData.ts

@@ -39,10 +39,11 @@ type Stake @entity {
 
 type NexusContracts @entity {
   id: ID!
+  contractRegister: Bytes! # address
   pool1: Bytes! # address
   memberRoles: Bytes! # address
   tokenData: Bytes! # address
-  claimsData: Bytes! # address
+  claims: Bytes! # address
 }
 
 type Claim @entity {

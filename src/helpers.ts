@@ -1,5 +1,6 @@
 import { NexusContracts, InsuredContract, User } from "../generated/schema";
-import { log, Address } from "@graphprotocol/graph-ts";
+import { log, Address, Bytes } from "@graphprotocol/graph-ts";
+import { ContractRegister } from "../generated/ContractRegister/ContractRegister";
 
 export function isLatestNexusContract(contractName: string, address: Address): boolean {
   if (NexusContracts.load("1").get(contractName).toBytes() != address) {
@@ -30,4 +31,8 @@ export function getUser(address: Address): User {
     entity.save();
   }
   return entity as User;
+}
+
+export function getLatestAddress(register: ContractRegister, hexString: string): Address {
+  return register.getLatestAddress(Bytes.fromHexString(hexString) as Bytes);
 }
