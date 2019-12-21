@@ -83,7 +83,7 @@ templates:
       file: ./src/mappingTokenData.ts
   - name: ClaimsData
     kind: ethereum/contract
-    network: mainnet
+    network: ropsten
     source:
       abi: ClaimsData
     mapping:
