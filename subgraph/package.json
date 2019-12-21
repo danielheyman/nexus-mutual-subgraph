@@ -4,10 +4,10 @@
   "scripts": {
     "codegen": "graph codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ danielheyman/nexus-mutual",
-    "create-local": "graph create --node http://localhost:8020/ danielheyman/nexus-mutual",
-    "remove-local": "graph remove --node http://localhost:8020/ danielheyman/nexus-mutual",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 danielheyman/nexus-mutual"
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ --ipfs https://api.thegraph.com/ipfs/ danielheyman/nexus-mutual-ropsten",
+    "create-local": "graph create --node http://localhost:8020/ danielheyman/nexus-mutual-ropsten",
+    "remove-local": "graph remove --node http://localhost:8020/ danielheyman/nexus-mutual-ropsten",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 danielheyman/nexus-mutual-ropsten"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.16.2",
