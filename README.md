@@ -2,11 +2,6 @@
 
 ### Local Development
 
-#### Connect this dApp to the subgraph
+#### dApp
 
-1. Update the `.env` file in the dapp directory
-2. Then, start this app:
-   ```sh
-   yarn install
-   yarn start
-   ```
+See https://github.com/danielheyman/nexus-mutual-dapp
