@@ -22,6 +22,7 @@ type Cover @entity {
   daysToCover: Int!
   created: BigInt!
   expires: BigInt!
+  claims: [Claim!]! @derivedFrom(field: "cover")
 }
 
 type Stake @entity {
@@ -46,12 +47,13 @@ type NexusContracts @entity {
 
 type Claim @entity {
   id: ID!
+  cover: Cover!
 }
 
-type NXM Token @entity {
-  id: ID!
-  totalSupply: BigInt!
-  price: BigInt!
-  marketCap: BigInt!
-  users: [User]
-}
+# type NXMToken @entity {
+#   id: ID!
+#   totalSupply: BigInt!
+#   price: BigInt!
+#   marketCap: BigInt!
+#   users: [User]
+# }

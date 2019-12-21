@@ -1,7 +1,7 @@
 import { AddStakeCall, PushUnlockedStakedTokensCall, TokenData, PushBurnedTokensCall } from "../generated/templates/TokenData/TokenData"
 import { Stake } from "../generated/schema"
 import { isLatestNexusContract, getInsuredContract, getUser } from "./helpers";
-import { BigInt, BigDecimal, log } from "@graphprotocol/graph-ts";
+import { BigInt, log } from "@graphprotocol/graph-ts";
 
 export function handleAddStake(call: AddStakeCall): void {
   if (isLatestNexusContract("tokenData", call.to)) {

@@ -15,7 +15,7 @@ export function updateContracts(call: AddNewVersionCall): void {
   let pool1 = getLatestAddress(register, "5031"); // P1
   let memberRoles =  getLatestAddress(register, "4d52"); // MR
   let tokenData =  getLatestAddress(register, "5444"); // TD
-  let claimsData = getLatestAddress(register, "43331"); //C1
+  let claimsData = getLatestAddress(register, "4344"); //CD
   
   let entity = NexusContracts.load("1");
   if (entity == null) {

@@ -5,10 +5,11 @@ import { BigInt } from "@graphprotocol/graph-ts";
 
 export function handleNewCover(call: MakeCoverBeginCall): void {
   if (isLatestNexusContract("pool1", call.to)) {
-    let id = call.transaction.hash.toHex();
+    let user = getUser(call.from);
+    let id = call.from.toHexString() + "-" + BigInt.fromI32(user.coverCount).toString();
+
     let entity = Cover.load(id);
     if (entity == null) {
-      let user = getUser(call.from);
       user.coverCount += 1;
       user.save();
 

@@ -1,5 +1,4 @@
 import { PayJoiningFeeCall } from "../generated/templates/MemberRoles/MemberRoles"
-import { User } from "../generated/schema"
 import { isLatestNexusContract, getUser } from "./helpers";
 
 export function handlePayJoiningFee(call: PayJoiningFeeCall): void {
