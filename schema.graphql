@@ -41,4 +41,17 @@ type NexusContracts @entity {
   pool1: Bytes! # address
   memberRoles: Bytes! # address
   tokenData: Bytes! # address
+  claimsData: Bytes! # address
+}
+
+type Claim @entity {
+  id: ID!
+}
+
+type NXM Token @entity {
+  id: ID!
+  totalSupply: BigInt!
+  price: BigInt!
+  marketCap: BigInt!
+  users: [User]
 }

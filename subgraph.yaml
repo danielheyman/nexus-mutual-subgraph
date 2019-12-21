@@ -81,3 +81,21 @@ templates:
         - function: pushBurnedTokens(address,uint256,uint256)
           handler: handleBurnStake
       file: ./src/mappingTokenData.ts
+  - name: ClaimsData
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: ClaimsData
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - Claim
+      abis:
+        - name: ClaimsData
+          file: ./abis/ClaimsData.json
+      callHandlers:
+        - function: addClaim(uint256, uint256, address, uint256)
+          handler: handleAddClaim
+      file: ./src/mappingClaimsData.ts
