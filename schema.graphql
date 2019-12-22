@@ -3,6 +3,8 @@ type User @entity {
   isMember: Boolean!
   coverCount: Int!
   stakeCount: Int!
+  claimCount: Int!
+  voteCount: Int!
   covers: [Cover!]! @derivedFrom(field: "user")
   stakes: [Stake!]! @derivedFrom(field: "user")
   claims: [Claim!]! @derivedFrom(field: "user")
@@ -16,6 +18,9 @@ type InsuredContract @entity {
   stakes: [Stake!]! @derivedFrom(field: "contract")
 }
 
+# Taken from QuotationData.Sol
+enum CoverStatus { Active, ClaimAccepted, ClaimDenied, CoverExpired, ClaimSubmitted, Requested }
+
 type Cover @entity {
   id: ID!
   user: User!
@@ -26,6 +31,8 @@ type Cover @entity {
   expires: BigInt!
   premium: BigInt!
   premiumNXM: BigInt!
+  status: CoverStatus!
+  payout: BigInt
   claims: [Claim!]! @derivedFrom(field: "cover")
 }
 
@@ -41,21 +48,30 @@ type Stake @entity {
   expires: BigInt!
 }
 
-type NexusContracts @entity {
+type NXMaster @entity {
   id: ID!
-  contractRegister: Bytes! # address
+  self: Bytes! # address
   memberRoles: Bytes! # address
   tokenData: Bytes! # address
   claimsData: Bytes! # address
   quotationData: Bytes! # address
   tokenController: Bytes! # address
+  pool1: Bytes! # address
 }
+
+enum ClaimStatus { CAVote, MemberVote, Closed }
+enum Verdict { Accepted, Denied }
 
 type Claim @entity {
   id: ID!
   user: User!
   cover: Cover!
   submitDate: BigInt!
+  statusUpdateDate: BigInt!
+  maxVotingTime: BigInt!
+  voteCount: Int!
+  status: ClaimStatus!
+  verdict: Verdict
   votes: [Vote!]! @derivedFrom(field: "claim")
 }
 
@@ -63,7 +79,7 @@ type Vote @entity {
   id: ID!
   user: User!
   claim: Claim!
-  verdict: Int!
+  verdict: Verdict!
   submitDate: BigInt!
 }
 

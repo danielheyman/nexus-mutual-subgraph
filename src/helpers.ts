@@ -1,9 +1,9 @@
-import { NexusContracts, InsuredContract, User } from "../generated/schema";
+import { NXMaster as NXMasterEntity, InsuredContract, User } from "../generated/schema";
 import { log, Address, Bytes, BigInt, BigDecimal } from "@graphprotocol/graph-ts";
-import { ContractRegister } from "../generated/ContractRegister/ContractRegister";
+import { NXMaster } from "../generated/NXMaster/NXMaster";
 
 export function isLatestNexusContract(contractName: string, address: Address): boolean {
-  if (NexusContracts.load("1").get(contractName).toBytes() != address) {
+  if (NXMasterEntity.load("1").get(contractName).toBytes() != address) {
     log.info("Ignoring outdated {} contract: {}", [contractName, address.toHexString()]);
     return false;
   }
@@ -28,13 +28,15 @@ export function getUser(address: Address): User {
     entity.isMember = false;
     entity.coverCount = 0;
     entity.stakeCount = 0;
+    entity.claimCount = 0;
+    entity.voteCount = 0;
     entity.save();
   }
   return entity as User;
 }
 
-export function getLatestAddress(register: ContractRegister, hexString: string): Address {
-  return register.getLatestAddress(Bytes.fromHexString(hexString) as Bytes);
+export function getLatestAddress(nx: NXMaster, hexString: string): Address {
+  return nx.getLatestAddress(Bytes.fromHexString(hexString) as Bytes);
 }
 
 export function toTokenDecimals(num: BigInt): BigDecimal {
