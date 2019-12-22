@@ -41,31 +41,6 @@ templates:
         - function: payJoiningFee(address)
           handler: handlePayJoiningFee
       file: ./src/mappingMemberRole.ts
-<<<<<<< HEAD
-  - name: Pool1
-    kind: ethereum/contract
-    network: ropsten
-    source:
-      abi: Pool1
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.3
-      language: wasm/assemblyscript
-      entities:
-        - Cover
-      abis:
-        - name: Pool1
-          file: ./abis/Pool1.json
-        - name: ContractRegister
-          file: ./abis/ContractRegister.json
-        - name: QuotationData
-          file: ./abis/QuotationData.json
-      callHandlers:
-        - function: makeCoverBegin(address,bytes4,uint256[],uint16,uint8,bytes32,bytes32)
-          handler: handleNewCover
-      file: ./src/mappingPool1.ts
-=======
->>>>>>> master
   - name: TokenData
     kind: ethereum/contract
     network: ropsten
@@ -124,7 +99,7 @@ templates:
       file: ./src/mappingClaimsData.ts
   - name: TokenController
     kind: ethereum/contract
-    network: mainnet
+    network: ropsten
     source:
       abi: TokenController
     mapping:
