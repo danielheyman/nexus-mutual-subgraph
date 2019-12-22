@@ -1,4 +1,4 @@
-import { NexusContracts, Stake } from "../generated/schema"
+import { NXMaster, Stake } from "../generated/schema"
 import{ isLatestNexusContract, toTokenDecimals } from "./helpers";
 import { Burned, Unlocked } from "../generated/templates/TokenController/TokenController";
 import { Address, BigInt, log } from "@graphprotocol/graph-ts";
@@ -6,7 +6,7 @@ import { TokenData } from "../generated/templates/TokenData/TokenData";
 
 export function handleBurned(event: Burned): void {
   if(isLatestNexusContract("tokenController", event.address)) {
-    let td = TokenData.bind(NexusContracts.load("1").tokenData as Address);
+    let td = TokenData.bind(NXMaster.load("1").tokenData as Address);
     let stakes = td.getStakerStakedContractLength(event.params.member).toI32();
     for (let i = 0; i < stakes; i++) {
       let burned = td.getStakerStakedBurnedByIndex(event.params.member, BigInt.fromI32(i));
@@ -27,7 +27,7 @@ export function handleBurned(event: Burned): void {
 
 export function handleUnlocked(event: Unlocked): void {
   if(isLatestNexusContract("tokenController", event.address)) {
-    let td = TokenData.bind(NexusContracts.load("1").tokenData as Address);
+    let td = TokenData.bind(NXMaster.load("1").tokenData as Address);
     let stakes = td.getStakerStakedContractLength(event.params._of).toI32();
     for (let i = 0; i < stakes; i++) {
       let unlocked = td.getStakerUnlockedStakedTokens(event.params._of, BigInt.fromI32(i));
