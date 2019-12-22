@@ -1,5 +1,5 @@
 import { NexusContracts, InsuredContract, User } from "../generated/schema";
-import { log, Address, Bytes } from "@graphprotocol/graph-ts";
+import { log, Address, Bytes, BigInt, BigDecimal } from "@graphprotocol/graph-ts";
 import { ContractRegister } from "../generated/ContractRegister/ContractRegister";
 
 export function isLatestNexusContract(contractName: string, address: Address): boolean {
@@ -35,4 +35,9 @@ export function getUser(address: Address): User {
 
 export function getLatestAddress(register: ContractRegister, hexString: string): Address {
   return register.getLatestAddress(Bytes.fromHexString(hexString) as Bytes);
+}
+
+export function toTokenDecimals(num: BigInt): BigDecimal {
+  let decimalMultiplier = BigInt.fromI32(10).pow(18).toBigDecimal();
+  return num.divDecimal(decimalMultiplier);
 }

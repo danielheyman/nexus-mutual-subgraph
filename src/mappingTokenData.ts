@@ -1,7 +1,7 @@
-import { AddStakeCall, PushUnlockedStakedTokensCall, TokenData, PushBurnedTokensCall } from "../generated/templates/TokenData/TokenData"
+import { AddStakeCall } from "../generated/templates/TokenData/TokenData"
 import { Stake } from "../generated/schema"
-import { isLatestNexusContract, getInsuredContract, getUser } from "./helpers";
-import { BigInt, log } from "@graphprotocol/graph-ts";
+import { isLatestNexusContract, getInsuredContract, getUser, toTokenDecimals } from "./helpers";
+import { BigInt } from "@graphprotocol/graph-ts";
 
 export function handleAddStake(call: AddStakeCall): void {
   if (isLatestNexusContract("tokenData", call.to)) {
@@ -13,10 +13,9 @@ export function handleAddStake(call: AddStakeCall): void {
       entity = new Stake(id);
       entity.user = user.id;
       entity.contract = getInsuredContract(call.inputs._stakedContractAddress).id;
-      let decimalMultiplier = BigInt.fromI32(10).pow(18).toBigDecimal();
-      entity.amount = call.inputs._amount.divDecimal(decimalMultiplier);
-      entity.unlockedAmount = BigInt.fromI32(0);
-      entity.burntAmount = BigInt.fromI32(0);
+      entity.amount = toTokenDecimals(call.inputs._amount);
+      entity.unlockedAmount = BigInt.fromI32(0).toBigDecimal();
+      entity.burntAmount = BigInt.fromI32(0).toBigDecimal();
       entity.daysToStake = 250;
       entity.created =  call.block.timestamp;
       entity.expires = call.block.timestamp.plus(BigInt.fromI32(entity.daysToStake * 24 * 60 * 60));
