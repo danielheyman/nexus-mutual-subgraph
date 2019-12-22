@@ -29,8 +29,8 @@ type Cover @entity {
   daysToCover: BigInt!
   created: BigInt!
   expires: BigInt!
-  premium: BigInt!
-  premiumNXM: BigInt!
+  premium: BigDecimal!
+  premiumNXM: BigDecimal!
   status: CoverStatus!
   payout: BigInt
   claims: [Claim!]! @derivedFrom(field: "cover")

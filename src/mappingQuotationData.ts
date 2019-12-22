@@ -1,5 +1,5 @@
 import { Cover } from "../generated/schema"
-import{ isLatestNexusContract, getUser, getInsuredContract } from "./helpers";
+import{ isLatestNexusContract, getUser, getInsuredContract, toTokenDecimals } from "./helpers";
 import { CoverDetailsEvent, CoverStatusEvent } from "../generated/templates/QuotationData/QuotationData";
 import { QuotationData } from "../generated/templates/QuotationData/QuotationData";
 
@@ -30,8 +30,8 @@ export function handleCoverDetailsEvent(event: CoverDetailsEvent): void {
     entity.user = user.id;
     entity.amount = event.params.sumAssured;
     entity.daysToCover = qd.getCoverPeriod(event.params.cid);
-    entity.premium = event.params.premium;
-    entity.premiumNXM = event.params.premiumNXM;
+    entity.premium = toTokenDecimals(event.params.premium);
+    entity.premiumNXM = toTokenDecimals(event.params.premiumNXM);
     entity.created =  event.block.timestamp;
     entity.expires = event.params.expiry;
     entity.status = statusNoToString(qd.getCoverStatusNo(event.params.cid));
