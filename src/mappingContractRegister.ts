@@ -15,11 +15,8 @@ export function updateContracts(call: AddNewVersionCall): void {
   let quotationData = getLatestAddress(register, "5144") // QD
   let tokenController = getLatestAddress(register, "5443") // TC
 
-  // add:
+  // Add support for Events:
   // Payout
-  // Locked
-  // Unlocked
-  // Burned
   // Commission
 
   let entity = NexusContracts.load("1");
