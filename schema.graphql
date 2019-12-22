@@ -34,8 +34,8 @@ type Stake @entity {
   user: User!
   contract: InsuredContract!
   amount: BigDecimal!
-  unlockedAmount: BigInt!
-  burntAmount: BigInt!
+  unlockedAmount: BigDecimal!
+  burntAmount: BigDecimal!
   daysToStake: Int!
   created: BigInt!
   expires: BigInt!

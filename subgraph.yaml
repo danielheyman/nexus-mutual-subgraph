@@ -116,4 +116,6 @@ templates:
       abis:
         - name: TokenController
           file: ./abis/TokenController.json
+        - name: TokenData
+          file: ./abis/TokenData.json
       file: ./src/mappingTokenController.ts
