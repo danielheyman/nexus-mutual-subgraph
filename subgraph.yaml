@@ -83,10 +83,6 @@ templates:
       callHandlers:
         - function: addStake(address,address,uint256)
           handler: handleAddStake
-        - function: pushUnlockedStakedTokens(address,uint256,uint256)
-          handler: handleRemoveStake
-        - function: pushBurnedTokens(address,uint256,uint256)
-          handler: handleBurnStake
       file: ./src/mappingTokenData.ts
   - name: QuotationData
     kind: ethereum/contract
@@ -126,3 +122,23 @@ templates:
         - name: ClaimsData
           file: ./abis/ClaimsData.json
       file: ./src/mappingClaimsData.ts
+  - name: TokenController
+    kind: ethereum/contract
+    network: mainnet
+    source:
+      abi: TokenController
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - TokenController
+      eventHandlers:
+        - event: Burned(indexed address,bytes32,uint256)
+          handler: handleBurned
+        - event: Unlocked(indexed address,indexed bytes32,uint256)
+          handler: handleUnlocked
+      abis:
+        - name: TokenController
+          file: ./abis/TokenController.json
+      file: ./src/mappingTokenController.ts

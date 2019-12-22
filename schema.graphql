@@ -48,6 +48,7 @@ type NexusContracts @entity {
   tokenData: Bytes! # address
   claimsData: Bytes! # address
   quotationData: Bytes! # address
+  tokenController: Bytes! # address
 }
 
 type Claim @entity {
