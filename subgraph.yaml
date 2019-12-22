@@ -41,6 +41,7 @@ templates:
         - function: payJoiningFee(address)
           handler: handlePayJoiningFee
       file: ./src/mappingMemberRole.ts
+<<<<<<< HEAD
   - name: Pool1
     kind: ethereum/contract
     network: ropsten
@@ -63,6 +64,8 @@ templates:
         - function: makeCoverBegin(address,bytes4,uint256[],uint16,uint8,bytes32,bytes32)
           handler: handleNewCover
       file: ./src/mappingPool1.ts
+=======
+>>>>>>> master
   - name: TokenData
     kind: ethereum/contract
     network: ropsten
@@ -85,24 +88,6 @@ templates:
         - function: pushBurnedTokens(address,uint256,uint256)
           handler: handleBurnStake
       file: ./src/mappingTokenData.ts
-  - name: Claims
-    kind: ethereum/contract
-    network: ropsten
-    source:
-      abi: Claims
-    mapping:
-      kind: ethereum/events
-      apiVersion: 0.0.3
-      language: wasm/assemblyscript
-      entities:
-        - Claim
-      abis:
-        - name: Claims
-          file: ./abis/Claims.json
-      callHandlers:
-        - function: submitClaim(uint256)
-          handler: handleSubmitClaim
-      file: ./src/mappingClaims.ts
   - name: QuotationData
     kind: ethereum/contract
     network: ropsten
@@ -114,7 +99,30 @@ templates:
       language: wasm/assemblyscript
       entities:
         - QuotationData
+      eventHandlers:
+        - event: CoverDetailsEvent(indexed uint256,address,uint256,uint256,uint256,uint256,bytes4)
+          handler: handleCoverDetailsEvent
       abis:
         - name: QuotationData
           file: ./abis/QuotationData.json
       file: ./src/mappingQuotationData.ts
+  - name: ClaimsData
+    kind: ethereum/contract
+    network: ropsten
+    source:
+      abi: ClaimsData
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.3
+      language: wasm/assemblyscript
+      entities:
+        - ClaimsData
+      eventHandlers:
+        - event: VoteCast(indexed address,indexed uint256,indexed bytes4,uint256,uint256,int8)
+          handler: handleVoteCast
+        - event: ClaimRaise(indexed uint256,indexed address,uint256,uint256)
+          handler: handleClaimRaise
+      abis:
+        - name: ClaimsData
+          file: ./abis/ClaimsData.json
+      file: ./src/mappingClaimsData.ts

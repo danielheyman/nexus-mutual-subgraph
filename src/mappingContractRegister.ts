@@ -1,6 +1,6 @@
 import { Bytes, log } from "@graphprotocol/graph-ts"
 import { ContractRegister, AddNewVersionCall } from "../generated/ContractRegister/ContractRegister";
-import { MemberRoles, Pool1, TokenData, Claims } from "../generated/templates";
+import { MemberRoles, TokenData, ClaimsData, QuotationData } from "../generated/templates";
 import { NexusContracts } from  "../generated/schema";
 import { getLatestAddress } from "./helpers";
 
@@ -9,24 +9,19 @@ export function updateContracts(call: AddNewVersionCall): void {
   let register = ContractRegister.bind(call.to);
 
   // got bytes using https://onlineutf8tools.com/convert-utf8-to-bytes
-  let pool1 = getLatestAddress(register, "5031"); // P1
   let memberRoles =  getLatestAddress(register, "4d52"); // MR
   let tokenData =  getLatestAddress(register, "5444"); // TD
-  let claims = getLatestAddress(register, "434c"); // CL
-  
+  let claimsData = getLatestAddress(register, "4344"); // CD
+  let quotationData = getLatestAddress(register, "5144") // QD
+
   let entity = NexusContracts.load("1");
   if (entity == null) {
     entity = new NexusContracts("1");
     entity.contractRegister = register._address;
-    entity.pool1 = new Bytes(0);
     entity.memberRoles = new Bytes(0);
     entity.tokenData = new Bytes(0);
-    entity.claims = new Bytes(0);
-  }
-  if (entity.pool1 != pool1) {
-    log.info("Found new pool1 contract: {}", [pool1.toHexString()]);
-    entity.pool1 = pool1;
-    Pool1.create(pool1);
+    entity.claimsData = new Bytes(0);
+    entity.quotationData = new Bytes(0);
   }
   if (entity.memberRoles != memberRoles) {
     log.info("Found new memberRoles contract: {}", [memberRoles.toHexString()]);
@@ -38,10 +33,15 @@ export function updateContracts(call: AddNewVersionCall): void {
     entity.tokenData = tokenData;
     TokenData.create(tokenData);
   }
-  if (entity.claims != claims) {
-    log.info("Found new claims contract: {}", [claims.toHexString()]);
-    entity.claims = claims;
-    Claims.create(claims);
+  if (entity.claimsData != claimsData) {
+    log.info("Found new claimsData contract: {}", [claimsData.toHexString()]);
+    entity.claimsData = claimsData;
+    ClaimsData.create(claimsData);
+  }
+  if (entity.quotationData != quotationData) {
+    log.info("Found new quotationData contract: {}", [quotationData.toHexString()]);
+    entity.quotationData = quotationData;
+    QuotationData.create(quotationData);
   }
   entity.save();
 }
